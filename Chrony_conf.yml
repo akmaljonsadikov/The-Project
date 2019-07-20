@@ -5,10 +5,10 @@
   become: yes
 
   tasks:
-  - name: configure resolv.conf file
+  - name: configure chrony.conf file
     template:
       src: /ansible/templates/chrony.conf.j2
-      dest: /etc/Chrony.conf
+      dest: /etc/chrony.conf
     notify: restart chronyd
 
   - name: start chronyd service
