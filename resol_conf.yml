@@ -1,0 +1,23 @@
+---
+- name: update resolv.conf file  
+  hosts: web
+  remote_user: ansible
+  become: yes
+ 
+  tasks:
+  - name: configure resolv.conf file
+    template:
+      src: /ansible/templates/resolv.conf.j2
+      dest: /etc/resolv.conf
+    notify: restart network
+
+  - name: start network service
+    service:
+      name: network
+      state: started  
+
+  handlers:
+  - name: restart network
+    service:  
+      name: network
+      state: restarted  
