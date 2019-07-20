@@ -7,7 +7,7 @@
   tasks:
   - name: configure resolv.conf file
     template:
-      src: /ansible/templates/Chrony.conf.j2
+      src: /ansible/templates/chrony.conf.j2
       dest: /etc/Chrony.conf
     notify: restart chronyd
 
