@@ -1,0 +1,23 @@
+---
+- name: update chrony.conf file
+  hosts: db_servers
+  remote_user: root
+  become: yes
+
+  tasks:
+  - name: configure resolv.conf file
+    template:
+      src: /ansible/templates/Chrony.conf.j2
+      dest: /etc/Chrony.conf
+    notify: restart chronyd
+
+  - name: start chronyd service
+    service:
+      name: chronyd
+      state: started
+
+  handlers:
+  - name: restart chronyd
+    service:
+      name: chronyd
+      state: restarted
