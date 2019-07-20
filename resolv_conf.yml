@@ -1,9 +1,9 @@
 ---
 - name: update resolv.conf file  
-  hosts: web
-  remote_user: ansible
+  hosts: time_servers
+  remote_user: root
   become: yes
- 
+
   tasks:
   - name: configure resolv.conf file
     template:
@@ -14,10 +14,10 @@
   - name: start network service
     service:
       name: network
-      state: started  
+      state: started
 
   handlers:
   - name: restart network
-    service:  
+    service:
       name: network
-      state: restarted  
+      state: restarted
