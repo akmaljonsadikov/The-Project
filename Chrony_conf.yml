@@ -1,6 +1,6 @@
 ---
 - name: update chrony.conf file
-  hosts: web_servers  
+  hosts: servers_no_ntp  
   remote_user: root
   become: yes
 
