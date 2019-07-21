@@ -1,0 +1,28 @@
+---
+- name: update resolv.conf file
+  hosts: Centos6_servers
+  remote_user: root
+  become: yes
+
+  tasks:
+  - name: install libselinux-python (this was required for Centos-6 machines to push resolv.conf)
+    yum:
+      name:  libselinux-python
+      state: latest
+
+  - name: configure resolv.conf file
+    template:
+      src: /Ziyotech-team4/ansible/templates/resolv.conf.j2
+      dest: /etc/resolv.conf
+    notify: restart network
+
+  - name: start network service
+    service:
+      name: network
+      state: started
+
+  handlers:
+  - name: restart network
+    service:
+      name: network
+      state: restarted
