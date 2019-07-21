@@ -1,13 +1,13 @@
 ---
 - name: update chrony.conf file
-  hosts: servers_no_ntp  
+  hosts: servers_no_ntp
   remote_user: root
   become: yes
 
   tasks:
   - name: configure chrony.conf file
     template:
-      src: /ansible/templates/chrony.conf.j2
+      src: /ansible/ansible/templates/chrony.conf.j2
       dest: /etc/chrony.conf
     notify: restart chronyd
 
