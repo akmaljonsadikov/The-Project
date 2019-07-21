@@ -1,19 +1,13 @@
 ---
-- name: update resolv.conf file
-  hosts: db_servers
+- name: update resolv.conf file  
+  hosts: time_servers
   remote_user: root
   become: yes
 
   tasks:
-  - name: copy Network Manager conf file
-    template:
-      src:  /ansible/ansible/templates/NetworkManager.conf.j2
-      dest:  /etc/NetworkManager/NetworkManager.conf
-    notify:  restart NetworkManager
-
   - name: configure resolv.conf file
     template:
-      src: /ansible/ansible/templates/resolv.conf.j2
+      src: /ansible/templates/resolv.conf.j2
       dest: /etc/resolv.conf
     notify: restart network
 
@@ -26,8 +20,4 @@
   - name: restart network
     service:
       name: network
-      state: restarted
-  - name: restart NetworkManager
-    service:
-      name: NetworkManager
       state: restarted
