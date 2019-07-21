@@ -1,6 +1,6 @@
 ---
 - name: install initial packages on all servers
-  hosts: db_servers
+  hosts: all
   remote_user: root
   become: yes
 
