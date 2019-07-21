@@ -1,6 +1,6 @@
 ---
 - name: update resolv.conf file
-  hosts: db_servers
+  hosts: servers_no_dns
   remote_user: root
   become: yes
 
