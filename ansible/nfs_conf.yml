@@ -1,0 +1,31 @@
+---
+- name: install NFS on client boxes
+  hosts: nfs-clients
+  remote_user: root
+  become: yes
+
+  tasks:
+  - name: install all initial packages
+    yum:
+      name: ['nfs-utils', 'portmap']
+      state: latest
+
+- name: create directory
+  hosts: nfs-clients
+
+  tasks:
+  - name: ansible create directory clientshare
+    file:
+      path: /clientshare
+      state: directory
+
+  - name: Mount
+    mount:
+      fstype: nfs
+      src: 192.168.44.19:/var/nfsshare
+      path: /clientshare
+      state: present
+
+  - name: this command will mount
+    command: /usr/bin/mount -a
+~                                    
