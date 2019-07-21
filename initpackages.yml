@@ -1,0 +1,11 @@
+---
+- name: install initial packages on all servers
+  hosts: db_servers
+  remote_user: root
+  become: yes
+
+  tasks:
+  - name: install all initial packages
+    yum:
+      name: [ 'man', 'syssat', 'man-pages', 'mlocate', 'vim','bind', 'bind-utils' ]
+      state: latest
