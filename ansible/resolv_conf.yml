@@ -7,13 +7,13 @@
   tasks:
   - name: copy Network Manager conf file
     template:
-      src:  /ansible/templates/NetworkManager.conf.j2
+      src:  /ansible/ansible/templates/NetworkManager.conf.j2
       dest:  /etc/NetworkManager/NetworkManager.conf
     notify:  restart NetworkManager
 
   - name: configure resolv.conf file
     template:
-      src: /ansible/templates/resolv.conf.j2
+      src: /ansible/ansible/templates/resolv.conf.j2
       dest: /etc/resolv.conf
     notify: restart network
 
