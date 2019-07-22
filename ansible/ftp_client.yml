@@ -1,0 +1,2 @@
+#this is an adhoc command to be run on the command line
+ansible all -m yum -a "name=ftp state=present"
