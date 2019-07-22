@@ -1,0 +1,11 @@
+---
+- name: configure repo on client server
+  hosts: all
+  remote_user: ansible
+  become: yes
+  
+  tasks:
+    - name: Add CentOS_7_6 repository
+      shell: yum-config-manager --add-repo=http://IP-ADDRESS/repos/CentOS/7/6/
+      args:
+        creates: /etc/yum.repos.d/centos_7_6.repo 

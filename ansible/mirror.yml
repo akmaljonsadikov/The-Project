@@ -1,0 +1,51 @@
+---
+- name: configure mirror repo over http
+  hosts: ftp-server
+  remote_user: ansible
+  become: yes
+
+  tasks:
+  - name: Allow Web service in Firewall
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+      immediate: true
+      
+  - name: install httpd and createrepo package
+    yum:
+      name: [ 'httpd', 'createrepo', 'rsync' ]
+      state: latest
+
+  - name: start httpd service
+    service:
+      name: httpd
+      state: started
+
+  - name: enable httpd service
+    service:
+      name: httpd
+      enabled: yes
+      
+  - name: Create repo directory
+    file:
+      path: /repos/CentOS/7/6
+      state: directory
+      
+  - name: Download packages from online repository
+    synchronize:
+      mode: pull
+      src: rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/
+      dest: /repos/CentOS/7/6/
+      
+  - name: Create symbolic link from Apache root directory to repo directory
+    file:
+      src: /repos/CentOS/7/6
+      dest: /var/www/html/CentOS
+      state: link
+    
+  - name: Sync repo nightly
+    cron:    
+      minute: 30
+      hour: 0
+      job: "rsync -az rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/ /repos/CentOS/7/6/"
