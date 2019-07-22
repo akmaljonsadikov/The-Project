@@ -1,0 +1,25 @@
+---
+- name: configure nagios clients
+  hosts: 192.168.44.10
+    remote_user: root
+  become: yes
+
+  - name: install epel-release, nrpe, nagios-plugins-all packages on clients
+    yum:
+      name: [ 'epel-release', 'nrpe', 'nagios-plugins-all' ]
+      state: latest
+
+  - name: Create symbolic link from Apache root directory to repo directory
+    file:
+      src: /Ziyotech-team4/ansible/templates/nrpe.cfg.j2
+      dest: /etc/nagios/nrpe.cfg
+
+  - name: start nrpe service
+    service:
+      name: nrpe
+      state: started
+
+  - name: enable nrpe service
+    service:
+      name: nrpe
+      enabled: yes
