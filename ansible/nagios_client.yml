@@ -12,7 +12,7 @@
 
   - name: install nrpe nagios-plugins-all package on clients
     yum:
-      name: "'nrpe nagios-plugins-all'"
+      name: "nrpe nagios-plugins-all"
       state: latest
 
   - name: Copy configured nrpe.cfg file client servers
