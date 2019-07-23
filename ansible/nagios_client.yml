@@ -5,9 +5,9 @@
   become: yes
 
   tasks:
-  - name: install epel-release, nrpe, nagios-plugins-all packages on clients
+  - name: install epel-release, nrpe nagios-plugins-all packages on clients
     yum:
-      name: [ 'epel-release', 'nrpe', 'nagios-plugins-all' ]
+      name: [ 'epel-release', 'nrpe nagios-plugins-all' ]
       state: latest
 
   - name: Create symbolic link from Apache root directory to repo directory
