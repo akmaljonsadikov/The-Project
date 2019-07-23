@@ -1,7 +1,7 @@
 ---
 - name: configure repo on client server
   hosts: all
-  remote_user: ansible
+  remote_user: root
   become: yes
   
   tasks:

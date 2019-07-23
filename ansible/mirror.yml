@@ -27,9 +27,9 @@
       name: httpd
       enabled: yes
       
-  - name: Create repo directory
+  - name: Create repository directory
     file:
-      path: /repos/CentOS/7/6
+      path: /repos/CentOS/7/6/
       state: directory
       
   - name: Download packages from online repository
@@ -38,9 +38,12 @@
       src: rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/
       dest: /repos/CentOS/7/6/
       
+  - name: Create repomd repository
+    command: createrepo /repos/CentOS/7/6
+      
   - name: Create symbolic link from Apache root directory to repository directory
     file:
-      src: /repos/CentOS/7/6
+      src: /repos/CentOS/7/6/
       dest: /var/www/html/CentOS
       state: link
     
