@@ -38,13 +38,13 @@
       src: rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/
       dest: /repos/CentOS/7/6/
       
-  - name: Create symbolic link from Apache root directory to repo directory
+  - name: Create symbolic link from Apache root directory to repository directory
     file:
       src: /repos/CentOS/7/6
       dest: /var/www/html/CentOS
       state: link
     
-  - name: Sync repo nightly
+  - name: Sync repository nightly
     cron:    
       minute: 30
       hour: 0
