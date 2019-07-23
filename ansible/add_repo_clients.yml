@@ -6,6 +6,6 @@
   
   tasks:
     - name: Add CentOS_7_6 repository
-      shell: yum-config-manager --add-repo=http://IP-ADDRESS/repos/CentOS/7/6/
+      shell: yum-config-manager --add-repo=http://192.168.44.18/repos/CentOS/7/6/
       args:
         creates: /etc/yum.repos.d/centos_7_6.repo 
