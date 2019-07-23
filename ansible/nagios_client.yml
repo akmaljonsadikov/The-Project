@@ -4,7 +4,7 @@
   remote_user: root
   become: yes
 
-  Tasks:
+  tasks:
   - name: install epel-release, nrpe, nagios-plugins-all packages on clients
     yum:
       name: [ 'epel-release', 'nrpe', 'nagios-plugins-all' ]
