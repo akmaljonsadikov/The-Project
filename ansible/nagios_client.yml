@@ -1,7 +1,7 @@
 ---
 - name: configure nagios clients
   hosts: 192.168.44.10
-    remote_user: root
+  remote_user: root
   become: yes
 
   Tasks:
