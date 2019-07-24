@@ -33,13 +33,13 @@
       state: directory
 
   - name: Create repomd repository
-    command: createrepo /repos/CentOS/7/6
+    command: createrepo /CentOS/7/6/
 
   - name: Download packages from online repository
     shell: rsync -avz --progress rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/ /repos/CentOS/7/6/
 
   - name: Create symbolic link from Apache root directory to repository directory
-    command: ln -s /repos/CentOS /var/www/html/CentOS
+    command: ln -s /repos/CentOS/7/6 /var/www/html/CentOS/7/6
 
   - name: Sync repository nightly
     cron:
