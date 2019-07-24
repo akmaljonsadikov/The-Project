@@ -22,7 +22,7 @@
     - name: copy the index.html file
       template: src=/Ziyotech-team4/ansible/files/index.html dest=/var/www/html owner=apache group=apache mode=0644
       
-    - name: Set hostname on conf file
+    - name: add hostname to index.html file
       command: sed -i s/Server/{{ ansible_hostname }}/g /var/www/html
       
     - name: restart Apache service
