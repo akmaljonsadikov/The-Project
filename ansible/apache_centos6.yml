@@ -1,0 +1,35 @@
+---
+- name: install Apache and configure 
+  hosts: all
+  remote_user: root
+  become: yes
+  
+  tasks:
+    - name: yum-clean-metadata
+      command: yum clean metadata
+      args:
+        warn: no
+
+    - name: install latest version of Apache
+      yum: pkg=httpd state=latest
+      
+    - name: enable Apache on system boot
+      service: name=httpd enabled=yes
+    
+    - name: start httpd service
+      service: name=httpd state=started
+      
+    - name: copy the index.html file
+      template: src=/ansible/files/index.html dest=/var/www/html owner=apache group=apache mode=0644
+      
+    - name: Set hostname on conf file
+      command: sed -i s/Server/{{ ansible_hostname }}/g /var/www/html
+      
+    - name: restart Apache service
+      service: name=httpd state=restarted
+      
+    - name: Open port 80 for http access
+      firewalld: service=http permanent=true state=enabled
+        
+    - name: Restart the firewalld service to load in the firewall changes
+      service: name=firewalld state=restarted
