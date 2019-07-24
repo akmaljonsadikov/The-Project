@@ -1,3 +1,4 @@
+
 ---
 - name: configure mirror repo over http
   hosts: ftp-server
@@ -33,7 +34,7 @@
       state: directory
 
   - name: Create repomd repository
-    command: createrepo /CentOS/7/6/
+    command: createrepo /repos/CentOS/7/6/
 
   - name: Download packages from online repository
     shell: rsync -avz --progress rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/ /repos/CentOS/7/6/
@@ -44,6 +45,3 @@
   - name: Sync repository nightly
     cron:
       name: Updates CentOS 7.6 repository nightly
-      minute: "30"
-      hour: "0"
-      job: "rsync -az rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/ /repos/CentOS/7/6/"
