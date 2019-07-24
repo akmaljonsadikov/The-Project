@@ -1,6 +1,6 @@
 ---
 - name: configure repo on client server
-  hosts: all
+  hosts: all !Centos6_servers
   remote_user: root
   become: yes
   
