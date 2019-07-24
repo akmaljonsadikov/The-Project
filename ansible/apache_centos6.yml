@@ -1,6 +1,6 @@
 ---
-- name: install Apache and configure 
-  hosts: all
+- name: install and configure Apache
+  hosts: Centos6_web_servers
   remote_user: root
   become: yes
   
@@ -20,7 +20,7 @@
       service: name=httpd state=started
       
     - name: copy the index.html file
-      template: src=/ansible/files/index.html dest=/var/www/html owner=apache group=apache mode=0644
+      template: src=/Ziyotech-team4/ansible/files/index.html dest=/var/www/html owner=apache group=apache mode=0644
       
     - name: Set hostname on conf file
       command: sed -i s/Server/{{ ansible_hostname }}/g /var/www/html
@@ -28,8 +28,11 @@
     - name: restart Apache service
       service: name=httpd state=restarted
       
-    - name: Open port 80 for http access
-      firewalld: service=http permanent=true state=enabled
-        
-    - name: Restart the firewalld service to load in the firewall changes
-      service: name=firewalld state=restarted
+    - name: install the iptables package
+      package: name=iptables state=latest
+    
+    - name: flush existing firewall rules
+      iptables: flush=true
+    
+    - name: firewall rule - allow port 80/HTTP traffic
+      iptables: chain=INPUT destination_port=80 jump=ACCEPT protocol=tcp
