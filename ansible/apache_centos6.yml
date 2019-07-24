@@ -18,7 +18,7 @@
       template: src=/Ziyotech-team4/ansible/files/index.html dest=/var/www/html owner=apache group=apache mode=0644
       
     - name: add hostname to index.html file
-      command: sed -i s/Server/{{ ansible_hostname }}/g /var/www/html
+      command: sed -i s/Server/{{ ansible_hostname }}/g /var/www/html/index.html
       
     - name: restart Apache service
       service: name=httpd state=restarted
