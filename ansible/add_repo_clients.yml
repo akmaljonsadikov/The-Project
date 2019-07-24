@@ -14,4 +14,4 @@
       yum_repository:
         name: CentOS_7_6
         description: Local CentOS_7_6 repository
-        baseurl: http://192.168.44.18/repos/CentOS/7/6/
+        baseurl: http://192.168.44.18/CentOS/7/6/
