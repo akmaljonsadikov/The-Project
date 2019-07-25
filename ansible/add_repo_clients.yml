@@ -1,6 +1,6 @@
 ---
 - name: configure repo on client server
-  hosts: all !Centos6_servers
+  hosts: all:!Centos6_servers:!centos6-load-balancers
   remote_user: root
   become: yes
   
