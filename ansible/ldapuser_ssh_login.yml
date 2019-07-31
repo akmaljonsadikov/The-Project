@@ -1,6 +1,6 @@
 ---
 - name: replace word from ldap-clients conf file.
-  hosts: 192.168.44.15
+  hosts: all
   remote_user: root
   become: yes
 
