@@ -5,6 +5,7 @@
  become: yes
 
  tasks:
+
  - replace:
      path: /etc/pam.d/password-auth-ac
      regexp: 'pam_sss.so'
@@ -19,4 +20,3 @@
  - name: start sshd service
    service:
      name: sshd
-     state: restarted
