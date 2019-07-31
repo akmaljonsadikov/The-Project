@@ -1,0 +1,22 @@
+---
+- name: replace word from ldap-clients conf file.
+ hosts: 192.168.44.15
+ remote_user: root
+ become: yes
+
+ tasks:
+ - replace:
+     path: /etc/pam.d/password-auth-ac
+     regexp: 'pam_sss.so'
+     replace: 'pam_ldap.so'
+     backup: yes
+
+ - name: start nslcd service
+   service:
+     name: nslcd
+     state: restarted
+
+ - name: start sshd service
+   service:
+     name: sshd
+     state: restarted
