@@ -1,6 +1,6 @@
 ---
 - name: configure autofs client
-  hosts: 192.168.44.14
+  hosts: nfs-clients  
   remote_user: root
   become: yes
 
