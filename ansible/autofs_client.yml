@@ -1,0 +1,23 @@
+---
+- name: configure autofs client
+  hosts: 192.168.44.14
+  remote_user: root
+  become: yes
+
+  tasks:
+  - name: copy auto.client.j2
+    template:
+      src:  /Ziyotech-team4/ansible/templates/auto.client.j2
+      dest:  /etc/auto.client
+
+  - name: copy auto.master.j2
+    template:
+      src: /Ziyotech-team4/ansible/templates/auto.master.j2
+      dest: /etc/auto.master
+    notify: restart autofs
+
+  handlers:
+  - name: restart autofs
+    service:
+      name: autofs
+      state: restarted
