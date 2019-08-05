@@ -1,6 +1,6 @@
 ---
 - name: update kernel to latest
-  hosts: 192.168.44.126
+  hosts: 192.168.44.153
   remote_user: root
   become: yes
 
@@ -11,8 +11,11 @@
   - name:   add new ELRepo repository with rpm command
     shell: rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
 
-  - name:   install latest kernel version
-    shell: yum --enablerepo=elrepo-kernel install kernel-ml
+  - name:  install latest kernel version
+      yum:
+        name: kernel-ml
+        enablerepo: elrepo-kernel
+        state: present
 
  # - name:   Check all available kernel versions with the awk command below
  #   shell: name: 'awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
