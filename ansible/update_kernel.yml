@@ -1,35 +1,24 @@
 ---
 - name: update kernel to latest
-  hosts: none
+  hosts: 192.168.44.126
   remote_user: root
   become: yes
 
   tasks:
   - name:   add ELRepo gpg key to the system
-    command:
-      name: rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+    shell: rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 
-  tasks:
   - name:   add new ELRepo repository with rpm command
-    command:
-      name: rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+    shell: rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
 
-  tasks:
   - name:   install latest kernel version
-    command:
-      name: yum --enablerepo=elrepo-kernel install kernel-ml
+    shell: yum --enablerepo=elrepo-kernel install kernel-ml
 
-  tasks:
-  - name:   Check all available kernel versions with the awk command below
-    command:
-      name: awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+ # - name:   Check all available kernel versions with the awk command below
+ #   shell: name: 'awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
 
-  tasks:
   - name:   set the latest kernel as a default
-    command:
-      name: grub2-set-default 0
+    shell: grub2-set-default 0
 
-  tasks:
-  - name:   generate the grub2 config with 'gurb2-mkconfig' command
-    command:
-      name: grub2-mkconfig -o /boot/grub2/grub.cfg 
+  - name:   generate the grub2 config with gurb2-mkconfig command
+    command: grub2-mkconfig -o /boot/grub2/grub.cfg
