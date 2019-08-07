@@ -1,7 +1,7 @@
 ---
 - name: configure mirror repo over http
   hosts: ftp-server
-  remote_user: ansible
+  remote_user: root
   become: yes
 
   tasks:
@@ -11,8 +11,8 @@
       permanent: true
       state: enabled
       immediate: true
-      
-  - name: install httpd and createrepo package
+
+  - name: install httpd, rsync and createrepo package
     yum:
       name: [ 'httpd', 'createrepo', 'rsync' ]
       state: latest
@@ -26,26 +26,24 @@
     service:
       name: httpd
       enabled: yes
-      
-  - name: Create repo directory
+
+  - name: Create repository directory
     file:
-      path: /repos/CentOS/7/6
+      path: /repos/CentOS/7/6/
       state: directory
-      
+
+  - name: Create repomd repository
+    command: createrepo /repos/CentOS/7/6/
+
   - name: Download packages from online repository
-    synchronize:
-      mode: pull
-      src: rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/
-      dest: /repos/CentOS/7/6/
-      
-  - name: Create symbolic link from Apache root directory to repo directory
-    file:
-      src: /repos/CentOS/7/6
-      dest: /var/www/html/CentOS
-      state: link
-    
-  - name: Sync repo nightly
-    cron:    
+    shell: rsync -avz --progress rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/ /repos/CentOS/7/6/
+
+  - name: Create symbolic link from Apache root directory to repository directory
+    command: ln -s /repos/CentOS/7/6 /var/www/html/CentOS/7/6
+
+  - name: Sync repository nightly
+    cron:
+      name: Updates CentOS 7.6 repository nightly
       minute: 30
       hour: 0
-      job: "rsync -az rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/ /repos/CentOS/7/6/"
+      job: rsync -avz --progress rsync://mirror.umd.edu/centos/7.6.1810/os/x86_64/ /repos/CentOS/7/6/

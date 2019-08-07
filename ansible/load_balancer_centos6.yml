@@ -1,0 +1,30 @@
+---
+- name: install and configure haproxy load balancer (layer 7)
+  hosts: centos6-load-balancers
+  remote_user: root
+  become: yes
+  
+  tasks:
+    - name: install latest version of Haproxy
+      yum: name=haproxy state=latest
+      
+    - name: enable Apache on system boot
+      service: name=haproxy enabled=yes
+      
+    - name: install the iptables package
+      package: name=iptables state=latest
+    
+    - name: flush existing firewall rules
+      iptables: flush=true
+    
+    - name: firewall rule - allow port 8181/HTTP traffic
+      iptables: chain=INPUT destination_port=8181 jump=ACCEPT protocol=tcp
+      
+    - name: Update HAProxy config
+      template: src=/Ziyotech-team4/ansible/templates/haproxy.j2 dest=/etc/haproxy/haproxy.cfg backup=yes
+      notify: 
+         - restart haproxy
+    
+  handlers:
+    - name: restart haproxy
+      service: name=haproxy state=restarted
