@@ -1,23 +1,19 @@
 ---
+- name: configure autofs client
+  hosts: nfs-clients
+  remote_user: root
+  become: yes
+
   tasks:
-    - name: yum-clean-metadata
-      command: yum clean metadata
-      args:
-        warn: no
+  - name: copy auto.client.j2
+    template:
+      src:  /Ziyotech-team4/ansible/templates/auto.client.j2
+      dest:  /etc/auto.client
 
-    - name: Install yum-utils package
-      yum:
-          name: yum-utils
-          state: latest
+  - name: copy auto.master.j2
+    template:
+      src: /Ziyotech-team4/ansible/templates/auto.master.j2
+      dest: /etc/auto.master
+    notify: restart autofs
 
-    - name: Remove repository (and clean up left-over metadata)
-      yum_repository:
-        name: CentOS_7_6
-        state: absent
-      notify: yum-clean-metadata
-
-    - name: Add CentOS_7_6 repository
-      yum_repository:
-        name: CentOS_7_6
-        description: Local CentOS_7_6 repository
-        baseurl: http://192.168.44.18/CentOS/7/6/
+  

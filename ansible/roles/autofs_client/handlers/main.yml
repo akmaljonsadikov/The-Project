@@ -1,2 +1,5 @@
 ---
-# handlers file for new_box
+- name: restart autofs
+  service:
+    name: autofs
+    state: restarted 
