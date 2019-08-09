@@ -1,7 +1,8 @@
 ---
 - name: install initial packages
-  hosts: 192.168.44.151
+  hosts: 192.168.44.126
   user: root
   become: true
+
   roles:
     - initial_packages
