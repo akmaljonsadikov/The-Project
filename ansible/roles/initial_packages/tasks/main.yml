@@ -1,5 +1,5 @@
 ---
-  tasks:
+  
   - name: install all initial packages
     yum:
       name: [ 'man', 'sysstat', 'man-pages', 'mlocate', 'vim', 'bind', 'bind-utils' ]
