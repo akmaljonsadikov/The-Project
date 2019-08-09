@@ -1,10 +1,4 @@
 ---
-- name: configure autofs client
-  hosts: nfs-clients
-  remote_user: root
-  become: yes
-
-  tasks:
   - name: copy auto.client.j2
     template:
       src:  /Ziyotech-team4/ansible/templates/auto.client.j2
@@ -15,5 +9,3 @@
       src: /Ziyotech-team4/ansible/templates/auto.master.j2
       dest: /etc/auto.master
     notify: restart autofs
-
-  
