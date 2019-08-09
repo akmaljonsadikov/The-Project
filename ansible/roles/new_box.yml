@@ -1,8 +1,12 @@
 ---
 - name: install initial packages
-  hosts: 192.168.44.126
+  hosts: 192.168.44.153
   user: root
   become: true
 
   roles:
     - initial_packages
+    - repo_client
+    - ldap_client
+    - autofs_client
+    - dns_client

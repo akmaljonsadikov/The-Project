@@ -6,9 +6,10 @@
 
   - name: "LDAP Authentication | Enable LDAP PAM modules"
     command: "authconfig --enableldap --enableldapauth --ldapserver=prdx-ldap14.ziyotek4.local --ldapbasedn='dc=ziyotek4,dc=local' --enableldaptls --ldaploadcacert=http://prdx-ldap14/ldap.pem --enablemkhomedir --disableldaptls --update"
+    ignore_errors: yes	
 
   - name: "LDAP Authentication | Adding configuration templates"
-    template:
+    template: 
         src="/ansible/ansible/templates/auto.master.j2"
         dest="/etc/auto.master"
 
@@ -38,7 +39,7 @@
       name: autofs
       state: started
 
- - name: enable autofs service
-   service:
-     name: autofs
-     enabled: yes
+  - name: enable autofs service
+    service:
+      name: autofs
+      enabled: yes
